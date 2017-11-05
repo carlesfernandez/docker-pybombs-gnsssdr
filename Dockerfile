@@ -5,7 +5,7 @@
 # to `latest`! See
 # https://github.com/phusion/baseimage-docker/blob/master/Changelog.md
 # for a list of version numbers.
-FROM phusion/baseimage:0.9.18
+FROM phusion/baseimage:0.9.22
 MAINTAINER carles.fernandez@cttc.es
 
 # Use baseimage-docker's init system.
@@ -16,32 +16,41 @@ ENV PyBOMBS_prefix myprefix
 ENV PyBOMBS_init /pybombs
 
 # Update apt-get
-RUN apt-get update
+RUN apt-get update -qq -y
 
 # Install PyBOMBS dependencies
-RUN apt-get install -y \
+RUN apt-get install -qq -y \
         python-pip \
         python-yaml \
         python-apt \
-        python-setuptools \
-        git-core
+        git
 
 # Install PyBOMBS
 RUN pip install --upgrade pip
 RUN pip install git+https://github.com/gnuradio/pybombs.git
 
-# Add recipes to PyBOMBS
-RUN pybombs recipes add gr-recipes git+https://github.com/gnuradio/gr-recipes.git
-RUN pybombs recipes add gr-etcetera git+https://github.com/gnuradio/gr-etcetera.git
+# Apply a configuration
+RUN pybombs auto-config
 
-# Add configuration flags to GNSS-SDR recipe
-RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnss-sdr.lwr
+# Add list of default recipes
+RUN pybombs recipes add-defaults
+
+# Customize configuration of some recipes
+RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENABLE_PLUTOSDR=ON -DENABLE_PACKAGING=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnss-sdr.lwr
+RUN sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
+RUN sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
+RUN sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
+RUN echo "gitbranch: next\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
+RUN echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_NOAA=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_PAGER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
+RUN sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
+RUN echo "gitbranch: master\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
 
 # Setup environment
 RUN pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default
 RUN echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc
 
 RUN pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr
+RUN pybombs -p ${PyBOMBS_prefix} -v install gr-iio
 RUN . ${PyBOMBS_init}/setup_env.sh
 RUN ldconfig
 ENV APPDATA /root
@@ -51,3 +60,5 @@ RUN . ${PyBOMBS_init}/setup_env.sh && ${PyBOMBS_init}/bin/volk_profile
 RUN . ${PyBOMBS_init}/setup_env.sh && ${PyBOMBS_init}/bin/volk_gnsssdr_profile
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+WORKDIR /home
+CMD ["bash"]
