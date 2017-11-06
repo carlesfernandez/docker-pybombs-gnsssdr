@@ -36,7 +36,7 @@ RUN pybombs auto-config
 RUN pybombs recipes add-defaults
 
 # Customize configuration of some recipes
-RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENABLE_PLUTOSDR=ON -DENABLE_PACKAGING=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnss-sdr.lwr
+RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENABLE_PLUTOSDR=ON -DENABLE_PACKAGING=ON -DENABLE_UNIT_TESTING=OFF\"\n" >> /root/.pybombs/recipes/gr-recipes/gnss-sdr.lwr
 RUN sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
