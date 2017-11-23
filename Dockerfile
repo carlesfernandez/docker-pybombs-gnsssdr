@@ -32,6 +32,11 @@ RUN pip install git+https://github.com/gnuradio/pybombs.git
 # Apply a configuration
 RUN pybombs auto-config
 
+# Install dependencies not available in PyBOMBS
+RUN apt-get install --fix-missing -qq -y \
+        libmatio-dev \
+        libgnutls-openssl-dev
+
 # Add list of default recipes
 RUN pybombs recipes add-defaults
 
@@ -40,6 +45,7 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENAB
 RUN sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
+RUN sed -i '/ssl/d' /root/.pybombs/recipes/gr-recipes/apache-thrift.lwr
 RUN echo "gitbranch: next\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_NOAA=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_PAGER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
@@ -49,9 +55,10 @@ RUN echo "gitbranch: master\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
 RUN pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default
 RUN echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc
 
+RUN . ${PyBOMBS_init}/setup_env.sh
 RUN pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr
 RUN pybombs -p ${PyBOMBS_prefix} -v install gr-iio
-RUN . ${PyBOMBS_init}/setup_env.sh
+
 RUN ldconfig
 ENV APPDATA /root
 RUN pybombs -p ${PyBOMBS_prefix} -v install gnss-sdr && rm -rf ${PyBOMBS_init}/src/*
