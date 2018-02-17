@@ -35,7 +35,7 @@ RUN pybombs auto-config
 # Install dependencies not available in PyBOMBS
 RUN apt-get install --fix-missing -qq -y \
         libmatio-dev \
-        libgnutls-openssl-dev
+        libgnutls-openssl-dev swig
 
 # Add list of default recipes
 RUN pybombs recipes add-defaults
@@ -63,7 +63,7 @@ RUN ldconfig
 ENV APPDATA /root
 RUN pybombs -p ${PyBOMBS_prefix} -v install gnss-sdr && rm -rf ${PyBOMBS_init}/src/*
 RUN ldconfig
-RUN . ${PyBOMBS_init}/setup_env.sh && ${PyBOMBS_init}/bin/volk_profile
+RUN . ${PyBOMBS_init}/setup_env.sh && ${PyBOMBS_init}/bin/volk_profile -v 8111
 RUN . ${PyBOMBS_init}/setup_env.sh && ${PyBOMBS_init}/bin/volk_gnsssdr_profile
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
