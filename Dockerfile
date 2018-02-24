@@ -35,7 +35,7 @@ RUN pybombs auto-config
 # Install dependencies not available in PyBOMBS
 RUN apt-get install --fix-missing -qq -y \
         libmatio-dev \
-        libgnutls-openssl-dev swig
+        libgnutls-openssl-dev swig nano
 
 # Add list of default recipes
 RUN pybombs recipes add-defaults
