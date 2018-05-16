@@ -41,7 +41,7 @@ RUN apt-get install --fix-missing -qq -y \
 RUN pybombs recipes add-defaults
 
 # Customize configuration of some recipes
-RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENABLE_PLUTOSDR=ON -DENABLE_PACKAGING=ON -DENABLE_UNIT_TESTING=OFF\"\n" >> /root/.pybombs/recipes/gr-recipes/gnss-sdr.lwr
+RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENABLE_PLUTOSDR=ON -DENABLE_AD9361=ON -DENABLE_RAW_UDP=ON -DENABLE_PACKAGING=ON -DENABLE_UNIT_TESTING=OFF\"\n" >> /root/.pybombs/recipes/gr-recipes/gnss-sdr.lwr
 RUN sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
@@ -58,6 +58,7 @@ RUN echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc
 RUN . ${PyBOMBS_init}/setup_env.sh
 RUN pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr
 RUN pybombs -p ${PyBOMBS_prefix} -v install gr-iio
+RUN pybombs -p ${PyBOMBS_prefix} -v install libpcap
 
 RUN ldconfig
 ENV APPDATA /root
