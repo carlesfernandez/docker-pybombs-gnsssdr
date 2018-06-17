@@ -3,7 +3,7 @@
 # Use phusion/baseimage as base image. To make your builds
 # reproducible, make sure you lock down to a specific version, not
 # to `latest`! See
-# https://github.com/phusion/baseimage-docker/blob/master/Changelog.md
+# https://github.com/phusion/baseimage-docker/releases
 # for a list of version numbers.
 FROM phusion/baseimage:master
 MAINTAINER carles.fernandez@cttc.es
@@ -15,15 +15,16 @@ CMD ["/sbin/my_init"]
 ENV PyBOMBS_prefix myprefix
 ENV PyBOMBS_init /pybombs
 
-# Update apt-get
-RUN apt-get update -qq -y
-
-# Install PyBOMBS dependencies
-RUN apt-get install -qq -y \
-        python-pip \
-        python-yaml \
-        python-apt \
-        git
+# Update apt-get and install dependencies not available in PyBOMBS
+RUN apt-get update -qq -y && apt-get install --fix-missing -qq -y \
+        python-pip=8.1.1-2ubuntu0.4 \
+        python-yaml=3.11-3build1 \
+        python-apt=1.1.0~beta1ubuntu0.16.04.1 \
+        git=1:2.7.4-0ubuntu1.4 \
+        libmatio-dev=1.5.3-1 \
+        libgnutls-openssl27=3.4.10-4ubuntu1.4 \
+        swig=3.0.8-0ubuntu3 \
+        nano=2.5.3-2ubuntu2
 
 # Install PyBOMBS
 RUN pip install --upgrade pip
@@ -31,11 +32,6 @@ RUN pip install git+https://github.com/gnuradio/pybombs.git
 
 # Apply a configuration
 RUN pybombs auto-config
-
-# Install dependencies not available in PyBOMBS
-RUN apt-get install --fix-missing -qq -y \
-        libmatio-dev \
-        libgnutls-openssl-dev swig nano
 
 # Add list of default recipes
 RUN pybombs recipes add-defaults
@@ -46,6 +42,7 @@ RUN sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/ssl/d' /root/.pybombs/recipes/gr-recipes/apache-thrift.lwr
+RUN sed -i '/iqbal/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr
 RUN echo "gitbranch: next\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_NOAA=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_PAGER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
