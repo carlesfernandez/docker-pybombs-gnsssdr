@@ -21,6 +21,7 @@ RUN apt-get update -qq -y && apt-get install --fix-missing -qq -y \
         python3-numpy=1:1.11.0-1ubuntu1 \
         python3-scipy=0.17.0-1 \
         python3-lxml=3.5.0-1build1 \
+        python-lxml=3.5.0-1build1 \
         python3-mako=1.0.3+ds1-1ubuntu1 \
         python-mako=1.0.3+ds1-1ubuntu1 \
         python3-gi-cairo=3.20.0-0ubuntu1 \
