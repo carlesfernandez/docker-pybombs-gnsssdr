@@ -17,9 +17,18 @@ ENV PyBOMBS_init /pybombs
 
 # Update apt-get and install dependencies not available in PyBOMBS
 RUN apt-get update -qq -y && apt-get install --fix-missing -qq -y \
-        python-pip=8.1.1-2ubuntu0.4 \
-        python-yaml=3.11-3build1 \
-        python-apt=1.1.0~beta1ubuntu0.16.04.1 \
+        python3-dev=3.5.1-3 \
+        python3-numpy=1:1.11.0-1ubuntu1 \
+        python3-scipy=0.17.0-1 \
+        python3-lxml=3.5.0-1build1 \
+        python3-mako=1.0.3+ds1-1ubuntu1 \
+        python-mako=1.0.3+ds1-1ubuntu1 \
+        python3-gi-cairo=3.20.0-0ubuntu1 \
+        python3-pyqt5=5.5.1+dfsg-3ubuntu4 \
+        python3-yaml=3.11-3build1 \
+        python3-pip=8.1.1-2ubuntu0.4 \
+        python3-apt=1.1.0~beta1ubuntu0.16.04.1 \
+        python3-requests=2.9.1-3 \
         git=1:2.7.4-0ubuntu1.4 \
         libmatio-dev=1.5.3-1 \
         libgnutls-openssl27=3.4.10-4ubuntu1.4 \
@@ -27,8 +36,9 @@ RUN apt-get update -qq -y && apt-get install --fix-missing -qq -y \
         nano=2.5.3-2ubuntu2
 
 # Install PyBOMBS
-RUN pip install --upgrade pip
-RUN pip install git+https://github.com/gnuradio/pybombs.git
+RUN pip3 install --upgrade pip
+RUN pip3 install mako
+RUN pip3 install git+https://github.com/gnuradio/pybombs.git
 
 # Apply a configuration
 RUN pybombs auto-config
