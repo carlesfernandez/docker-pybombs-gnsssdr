@@ -34,6 +34,7 @@ RUN apt-get update -qq -y && apt-get install --fix-missing -qq -y \
         libmatio-dev=1.5.3-1 \
         libgnutls-openssl27=3.4.10-4ubuntu1.4 \
         swig=3.0.8-0ubuntu3 \
+        libgtk-3-dev=3.18.9-1ubuntu3.3 \
         nano=2.5.3-2ubuntu2
 
 # Install PyBOMBS
