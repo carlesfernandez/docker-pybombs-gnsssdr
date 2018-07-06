@@ -37,7 +37,8 @@ RUN apt-get update -qq -y && apt-get install --fix-missing -qq -y \
         nano=2.5.3-2ubuntu2 \
         pkg-config=0.29.1-0ubuntu1 \
         python-cheetah=2.4.4-3.fakesyncbuild1 \
-        automake=1:1.15-4ubuntu1 && apt-get clean
+        automake=1:1.15-4ubuntu1 \
+        gir1.2-pango-1.0=1.38.1-1 && apt-get clean
 
 # Install PyBOMBS
 RUN pip3 install --upgrade pip
@@ -52,16 +53,21 @@ RUN pybombs recipes add-defaults
 
 # Customize configuration of some recipes
 RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENABLE_PLUTOSDR=ON -DENABLE_AD9361=ON -DENABLE_RAW_UDP=ON -DENABLE_PACKAGING=ON -DENABLE_UNIT_TESTING=OFF\"\n" >> /root/.pybombs/recipes/gr-recipes/gnss-sdr.lwr
+RUN sed -i '/alsa/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/thrift/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
+RUN sed -i '/pygtk/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
+RUN sed -i '/pycairo/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/ssl/d' /root/.pybombs/recipes/gr-recipes/apache-thrift.lwr
 RUN sed -i '/iqbal/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr
 RUN echo "gitbranch: next\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
-RUN echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_NOAA=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_PAGER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=OFF\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
+RUN echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_NOAA=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_PAGER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr
 RUN sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
 RUN echo "gitbranch: master\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
+
+RUN apt-get install -y gir1.2-gtk-3.0=3.18.9-1ubuntu3.3 && apt-get clean
 
 # Setup environment
 RUN pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default
