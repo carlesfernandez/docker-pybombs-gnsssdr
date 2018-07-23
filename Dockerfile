@@ -5,7 +5,7 @@
 # to `latest`! See
 # https://github.com/phusion/baseimage-docker/releases
 # for a list of version numbers.
-FROM phusion/baseimage:master
+FROM phusion/baseimage:0.10.1
 MAINTAINER carles.fernandez@cttc.es
 
 # Use baseimage-docker's init system.
@@ -28,7 +28,7 @@ RUN apt-get update -qq -y && apt-get install --fix-missing -qq -y \
         python3-pyqt5=5.5.1+dfsg-3ubuntu4 \
         python3-yaml=3.11-3build1 \
         python3-pip=8.1.1-2ubuntu0.4 \
-        python3-apt=1.1.0~beta1ubuntu0.16.04.1 \
+        python3-apt=1.1.0~beta1ubuntu0.16.04.2 \
         python3-requests=2.9.1-3 \
         git=1:2.7.4-0ubuntu1.4 \
         libmatio-dev=1.5.3-1 \
