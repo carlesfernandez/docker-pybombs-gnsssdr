@@ -74,9 +74,9 @@ RUN apt-get update -qq -y && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_pr
 RUN echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc
 
 RUN apt-get update -qq -y && . ${PyBOMBS_init}/setup_env.sh
-RUN pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr
-RUN pybombs -p ${PyBOMBS_prefix} -v install gr-iio
-RUN pybombs -p ${PyBOMBS_prefix} -v install libpcap
+RUN pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr && rm -rf ${PyBOMBS_init}/src/*
+RUN pybombs -p ${PyBOMBS_prefix} -v install gr-iio && rm -rf ${PyBOMBS_init}/src/*
+RUN pybombs -p ${PyBOMBS_prefix} -v install libpcap && rm -rf ${PyBOMBS_init}/src/*
 
 RUN ldconfig
 ENV APPDATA /root
