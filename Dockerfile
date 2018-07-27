@@ -70,7 +70,7 @@ RUN echo "gitbranch: master\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
 RUN apt-get update -qq -y && apt-get install -y gir1.2-gtk-3.0=3.18.9-1ubuntu3.3 && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Setup environment
-RUN apt-get update -qq -y && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -qq -y && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 RUN echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc
 
 RUN apt-get update -qq -y && . ${PyBOMBS_init}/setup_env.sh
