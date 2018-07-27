@@ -38,11 +38,11 @@ RUN apt-get update -qq -y && apt-get install --fix-missing -qq -y \
         pkg-config=0.29.1-0ubuntu1 \
         python-cheetah=2.4.4-3.fakesyncbuild1 \
         automake=1:1.15-4ubuntu1 \
-        gir1.2-pango-1.0=1.38.1-1 && apt-get clean
+        gir1.2-pango-1.0=1.38.1-1 \
+        && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PyBOMBS
 RUN pip3 install --upgrade pip
-RUN pip3 install mako
 RUN pip3 install git+https://github.com/gnuradio/pybombs.git
 
 # Apply a configuration
@@ -67,13 +67,13 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_COMEDI=OFF -D
 RUN sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
 RUN echo "gitbranch: master\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
 
-RUN apt-get install -y gir1.2-gtk-3.0=3.18.9-1ubuntu3.3 && apt-get clean
+RUN apt-get update -qq -y && apt-get install -y gir1.2-gtk-3.0=3.18.9-1ubuntu3.3 && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Setup environment
-RUN pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default
+RUN apt-get update -qq -y && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc
 
-RUN . ${PyBOMBS_init}/setup_env.sh
+RUN apt-get update -qq -y && . ${PyBOMBS_init}/setup_env.sh
 RUN pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr
 RUN pybombs -p ${PyBOMBS_prefix} -v install gr-iio
 RUN pybombs -p ${PyBOMBS_prefix} -v install libpcap
