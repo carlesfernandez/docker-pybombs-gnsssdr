@@ -15,7 +15,7 @@ CMD ["/sbin/my_init"]
 ENV PyBOMBS_prefix myprefix
 ENV PyBOMBS_init /pybombs
 
-# Update apt-get and install dependencies not available in PyBOMBS
+# Update apt-get and install some dependencies
 RUN apt-get update -qq -y && apt-get install --fix-missing -qq -y --no-install-recommends \
         python3-dev=3.5.1-3 \
         python3-numpy=1:1.11.0-1ubuntu1 \
@@ -70,21 +70,21 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_COMEDI=OFF -D
 RUN sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
 RUN echo "gitbranch: master\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
 
-# RUN apt-get update -qq -y && apt-get install -y --no-install-recommends gir1.2-gtk-3.0=3.18.9-1ubuntu3.3 && apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # Setup environment
 RUN apt-get update -qq -y && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 RUN echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc
 RUN . ${PyBOMBS_init}/setup_env.sh
 
+# Install optional drivers via Pybombs
 RUN apt-get update -qq -y && pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 RUN apt-get update -qq -y && pybombs -p ${PyBOMBS_prefix} -v install gr-iio && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 RUN apt-get update -qq -y && pybombs -p ${PyBOMBS_prefix} -v install libpcap && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
-RUN ldconfig
+# Build and install gnss-sdr drivers via Pybombs
 ENV APPDATA /root
-RUN pybombs -p ${PyBOMBS_prefix} -v install gnss-sdr && rm -rf ${PyBOMBS_init}/src/*
-RUN ldconfig
+RUN apt-get update -qq -y && pybombs -p ${PyBOMBS_prefix} -v install gnss-sdr && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
+
+# Run VOLK profilers
 RUN . ${PyBOMBS_init}/setup_env.sh && ${PyBOMBS_init}/bin/volk_profile -v 8111
 RUN . ${PyBOMBS_init}/setup_env.sh && ${PyBOMBS_init}/bin/volk_gnsssdr_profile
 RUN rm -rf /tmp/* /var/tmp/*
