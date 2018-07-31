@@ -32,7 +32,6 @@ RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommen
         python3-lxml=3.5.0-1build1 \
         python3-mako=1.0.3+ds1-1ubuntu1 \
         python3-numpy=1:1.11.0-1ubuntu1 \
-        python3-scipy=0.17.0-1 \
         python3-pip=8.1.1-2ubuntu0.4 \
         python3-pyqt5=5.5.1+dfsg-3ubuntu4 \
         python3-requests=2.9.1-3 \
@@ -54,10 +53,15 @@ RUN pybombs recipes add-defaults
 # Customize configuration of some recipes
 RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENABLE_PLUTOSDR=ON -DENABLE_AD9361=ON -DENABLE_RAW_UDP=ON -DENABLE_PACKAGING=ON -DENABLE_UNIT_TESTING=OFF -DPYTHON_EXECUTABLE=/usr/bin/python3\"\n" >> /root/.pybombs/recipes/gr-recipes/gnss-sdr.lwr \
  && echo "vars:\n  config_opt: \" -DINSTALL_LIB_DIR=\$prefix/lib -DENABLE_PYTHON3=ON\"" >> /root/.pybombs/recipes/gr-recipes/uhd.lwr \
+ && sed -i '/cppunit/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+ && sed -i '/gsl/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/alsa/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+ && sed -i '/wxpython/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/thrift/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/pygtk/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/pycairo/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+ && sed -i '/pyqt4/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+ && sed -i '/qwt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
@@ -68,7 +72,7 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENAB
  && sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
  && echo "gitbranch: master\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
 
-# Setup environment
+# Build and install GNU Radio via Pybombs
 RUN apt-get -qq update && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 RUN echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc
 RUN . ${PyBOMBS_init}/setup_env.sh
