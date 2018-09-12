@@ -8,9 +8,6 @@
 FROM phusion/baseimage:0.11
 MAINTAINER carles.fernandez@cttc.es
 
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
-
 # Set prefix variables
 ENV PyBOMBS_prefix myprefix
 ENV PyBOMBS_init /pybombs
