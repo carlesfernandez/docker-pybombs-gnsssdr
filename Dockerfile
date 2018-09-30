@@ -69,7 +69,9 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENAB
  && sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
  && echo "gitbranch: master\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
  && sed -i '/osmocom/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
- && echo "source: git+https://github.com/osmocom/gr-osmosdr.git\n" >> /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr
+ && echo "source: git+https://github.com/osmocom/gr-osmosdr.git\n" >> /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
+ && sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/libiio.lwr \
+ && echo "gitrev: tags/v0.15\n" >> /root/.pybombs/recipes/gr-recipes/libiio.lwr
 
 # Build and install GNU Radio via Pybombs
 RUN apt-get -qq update && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default && apt-get clean && rm -rf /var/lib/apt/lists/* && cp ${PyBOMBS_init}/src/gnuradio/gr-filter/include/gnuradio/filter/fir_filter_blk.h ${PyBOMBS_init}/include/gnuradio/filter/ && rm -rf ${PyBOMBS_init}/src/*
