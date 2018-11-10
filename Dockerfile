@@ -21,6 +21,7 @@ RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommen
  libarmadillo-dev=1:8.400.0+dfsg-2 \
  libgnutls28-dev=3.5.18-1ubuntu1 \
  libmatio-dev=1.5.11-1 \
+ libpugixml-dev=1.8.1-7 \
  nano=2.9.3-2 \
  pkg-config=0.29.1-0ubuntu2 \
  python3-apt=1.6.2 \
