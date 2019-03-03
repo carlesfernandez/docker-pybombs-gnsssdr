@@ -50,9 +50,11 @@ for X11 unix socker. Sometimes, this will fail first and look something like thi
 > rqt: cannot connect to X server unix: 0
 
 We can just adjust the permission of X server host by the following command.
+
       $ xhost +local:root
 
 Now, if we run the docker images, it will simply run.
 
 P.S. In case you want to revoke the granted permission
+
      $ xhost -local:root
