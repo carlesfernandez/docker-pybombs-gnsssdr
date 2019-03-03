@@ -40,3 +40,19 @@ This should work on most Linux X server machines and makes GNU Radio Companion a
 
      $ docker run --rm -ti -e DISPLAY -v $HOME/.Xauthority:/root/.Xauthority \
      --net=host carlesfernandez/docker-pybombs-gnsssdr
+
+Granting the Necessary permission
+--------------
+Above, we made the container processes interactive, forwarded our Display environment variable, mounted a volume 
+for X11 unix socker. Sometimes, this will fail first and look something like this, but that's ok:
+
+> No protocol specified
+> rqt: cannot connect to X server unix: 0
+
+We can just adjust the permission of X server host by the following command.
+      $ xhost +local:root
+
+Now, if we run the docker images, it will simply run.
+
+P.S. In case you want to revoke the granted permission
+     $ xhost -local:root
