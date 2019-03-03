@@ -44,7 +44,7 @@ This should work on most Linux X server machines and makes GNU Radio Companion a
 Granting the Necessary permission
 --------------
 Above, we made the container processes interactive, forwarded our Display environment variable, mounted a volume 
-for X11 unix socker. Sometimes, this will fail first and look something like this, but that's ok:
+for X11 unix socket. Sometimes, this will fail first and look something like this, but that's ok:
 
 > No protocol specified
 > rqt: cannot connect to X server unix: 0
