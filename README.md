@@ -28,15 +28,49 @@ Go to the repository directory and run the following command:
      $ docker build -t carlesfernandez/docker-pybombs-gnsssdr .
 
 
+
 Run docker image
 -----------
+
 Run:
 
     $ docker run -it carlesfernandez/docker-pybombs-gnsssdr
 
-Run with graphical environment:
+### Run with graphical environment:
 
-This should work on most Linux X server machines and makes GNU Radio Companion accessible.
+ * **On GNU/Linux host machines with X11 server installed**
 
-     $ docker run --rm -ti -e DISPLAY -v $HOME/.Xauthority:/root/.Xauthority \
-     --net=host carlesfernandez/docker-pybombs-gnsssdr
+   In the host machine, adjust the permission of the X server host by the following command:
+
+       $ xhost +local:root
+
+   Then run the container with:
+
+       $ docker run -e DISPLAY=$DISPLAY -v $HOME/.Xauthority:/root/.Xauthority \
+       --net=host -it carlesfernandez/docker-pybombs-gnsssdr
+
+   In case you want to revoke the granted permission:
+
+       $ xhost -local:root
+
+ * **On MacOS host machines**
+
+   Do this once:
+     - Install the latest [XQuartz](https://www.xquartz.org/) version and run it.
+     - Activate the option "[Allow connections from network clients](https://blogs.oracle.com/oraclewebcentersuite/running-gui-applications-on-native-docker-containers-for-mac)" in XQuartz settings.
+     - Quit and restart XQuartz to activate the setting.
+
+   In the host machine:
+
+       $ xhost + 127.0.0.1
+
+   Then run the container with:
+
+       $ docker run -e DISPLAY=host.docker.internal:0 -v $HOME/.Xauthority:/root/.Xauthority \
+       --net=host -it carlesfernandez/docker-pybombs-gnsssdr
+
+ * **Test it!**
+
+   In the container:
+
+       root@ubuntu:/home# gnuradio-companion
