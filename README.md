@@ -72,3 +72,5 @@ Build docker image
 This step is not needed if you have pulled the docker image. If you want to build the Docker image on you own, go to the repository root folder and run the following command:
 
      $ docker build -t carlesfernandez/docker-pybombs-gnsssdr .
+
+You can change `carlesfernandez/docker-pybombs-gnsssdr` at your own preference.
