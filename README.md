@@ -26,6 +26,16 @@ Run:
 
     $ docker run -it carlesfernandez/docker-pybombs-gnsssdr
 
+
+### Run with access to a folder in the host machine
+
+Maybe you want to include a local folder with GNSS raw data to process in your container, or to extract output files generated during its execution. You can do that by running the container as:
+
+    $ docker run -it -v /home/user/data:/data carlesfernandez/docker-pybombs-gnsssdr
+
+This will mount the `/home/user/data` folder in the host machine on the `/data` folder inside the container, with read and write permissions.
+
+
 ### Run with graphical environment:
 
  * **On GNU/Linux host machines with X11 server installed**
