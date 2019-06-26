@@ -28,6 +28,7 @@ RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommen
  pkg-config=0.29.1-0ubuntu2 \
  python3-apt=1.6.2 \
  python3-click=6.7-3 \
+ python3-click-plugins=1.0.2-1ubuntu3 \
  python3-dev=3.6.7-1~18.04 \
  python3-gi-cairo=3.26.1-2 \
  python3-lxml=4.2.1-1 \
