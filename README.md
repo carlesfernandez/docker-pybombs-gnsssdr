@@ -19,24 +19,68 @@ You can download (pull) the image via following command:
      $ docker pull carlesfernandez/docker-pybombs-gnsssdr
 
 
-
-Build docker image
------------
-
-Go to the repository directory and run the following command:
-
-     $ docker build -t carlesfernandez/docker-pybombs-gnsssdr .
-
-
 Run docker image
 -----------
+
 Run:
 
     $ docker run -it carlesfernandez/docker-pybombs-gnsssdr
 
-Run with graphical environment:
 
-This should work on most Linux X server machines and makes GNU Radio Companion accessible.
+### Run with access to a folder in the host machine
 
-     $ docker run --rm -ti -e DISPLAY -v $HOME/.Xauthority:/root/.Xauthority \
-     --net=host carlesfernandez/docker-pybombs-gnsssdr
+Maybe you want to include a local folder with GNSS raw data to process in your container, or to extract output files generated during its execution. You can do that by running the container as:
+
+    $ docker run -it -v /home/user/data:/data carlesfernandez/docker-pybombs-gnsssdr
+
+This will mount the `/home/user/data` folder in the host machine on the `/data` folder inside the container, with read and write permissions.
+
+
+### Run with graphical environment:
+
+ * **On GNU/Linux host machines with X11 server installed**
+
+   In the host machine, adjust the permission of the X server host by the following command:
+
+       $ xhost +local:root
+
+   Then run the container with:
+
+       $ docker run -e DISPLAY=$DISPLAY -v $HOME/.Xauthority:/root/.Xauthority \
+       --net=host -it carlesfernandez/docker-pybombs-gnsssdr
+
+   In case you want to revoke the granted permission:
+
+       $ xhost -local:root
+
+ * **On MacOS host machines**
+
+   Do this once:
+     - Install the latest [XQuartz](https://www.xquartz.org/) version and run it.
+     - Activate the option "[Allow connections from network clients](https://blogs.oracle.com/oraclewebcentersuite/running-gui-applications-on-native-docker-containers-for-mac)" in XQuartz settings.
+     - Quit and restart XQuartz to activate the setting.
+
+   In the host machine:
+
+       $ xhost + 127.0.0.1
+
+   Then run the container with:
+
+       $ docker run -e DISPLAY=host.docker.internal:0 -v $HOME/.Xauthority:/root/.Xauthority \
+       --net=host -it carlesfernandez/docker-pybombs-gnsssdr
+
+ * **Test it!**
+
+   In the container:
+
+       root@ubuntu:/home# gnuradio-companion
+
+
+Build docker image
+-----------
+
+This step is not needed if you have pulled the docker image. If you want to build the Docker image on you own, go to the repository root folder and run the following command:
+
+     $ docker build -t carlesfernandez/docker-pybombs-gnsssdr .
+
+You can change `carlesfernandez/docker-pybombs-gnsssdr` at your own preference.
