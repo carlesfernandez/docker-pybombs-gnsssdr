@@ -19,7 +19,7 @@ RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommen
  gir1.2-pango-1.0=1.40.14-1 \
  git=1:2.17.1-1ubuntu0.5 \
  libarmadillo-dev=1:8.400.0+dfsg-2 \
- libgnutls28-dev=3.5.18-1ubuntu1.2 \
+ libgnutls28-dev=3.5.18-1ubuntu1.3 \
  libmatio-dev=1.5.11-1 \
  libpugixml-dev=1.8.1-7 \
  libprotobuf-dev=3.0.0-9.1ubuntu1 \
