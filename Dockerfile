@@ -5,8 +5,8 @@
 # to `latest`! See
 # https://github.com/phusion/baseimage-docker/releases
 # for a list of version numbers.
-FROM phusion/baseimage:0.11
-MAINTAINER carles.fernandez@cttc.es
+FROM phusion/baseimage:bionic-1.0.0
+LABEL version="1.0" description="GNSS-SDR image built with PyBOMBS" maintainer="carles.fernandez@cttc.es"
 
 # Set prefix variables
 ENV PyBOMBS_prefix myprefix
@@ -26,11 +26,11 @@ RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommen
  protobuf-compiler=3.0.0-9.1ubuntu1 \
  nano=2.9.3-2 \
  pkg-config=0.29.1-0ubuntu2 \
- python3-apt=1.6.2 \
+ python3-apt=1.6.5ubuntu0.3 \
  python3-click=6.7-3 \
  python3-click-plugins=1.0.2-1ubuntu3 \
  python3-dev=3.6.7-1~18.04 \
- python3-gi-cairo=3.26.1-2 \
+ python3-gi-cairo=3.26.1-2ubuntu1 \
  python3-lxml=4.2.1-1 \
  python3-mako=1.0.7+ds1-1 \
  python3-numpy=1:1.13.3-2ubuntu1 \
@@ -55,21 +55,15 @@ RUN pybombs recipes add-defaults
 # Customize configuration of some recipes
 RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENABLE_PLUTOSDR=ON -DENABLE_AD9361=ON -DENABLE_RAW_UDP=ON -DENABLE_PACKAGING=ON -DENABLE_UNIT_TESTING=OFF -DPYTHON_EXECUTABLE=/usr/bin/python3\"\n" >> /root/.pybombs/recipes/gr-recipes/gnss-sdr.lwr \
  && echo "vars:\n  config_opt: \" -DINSTALL_LIB_DIR=\$prefix/lib -DENABLE_PYTHON3=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/uhd.lwr \
- && sed -i '/cppunit/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/gsl/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/alsa/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i '/wxpython/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i '/thrift/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/pygtk/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/pycairo/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i '/pyqt4/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i '/qwt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+ && sed -i '/qwt6/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/ssl/d' /root/.pybombs/recipes/gr-recipes/apache-thrift.lwr \
  && sed -i '/iqbal/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
- && echo "gitbranch: maint-3.8\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_CHANNELS=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ZEROMQ=OFF -DENABLE_GR_CTRLPORT=ON -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
  && sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
