@@ -1,5 +1,8 @@
+# SPDX-FileCopyrightText: 2020, Carles Fernandez-Prades <carles.fernandez@cttc.es>
+# SPDX-License-Identifier: MIT
+#
 # Install GNSS-SDR and its dependencies using PyBOMBS
-
+#
 # Use phusion/baseimage as base image. To make your builds
 # reproducible, make sure you lock down to a specific version, not
 # to `latest`! See
@@ -83,8 +86,6 @@ RUN apt-get -qq update && pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr gr-
 
 # Build and install gnss-sdr drivers via Pybombs
 ENV APPDATA /root
-# Trick to avoid using cache
-ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
 RUN apt-get -qq update && pybombs -p ${PyBOMBS_prefix} -v install gnss-sdr && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
 WORKDIR /home
