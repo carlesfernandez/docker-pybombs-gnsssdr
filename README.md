@@ -4,7 +4,7 @@ SPDX-License-Identifier: MIT
 )
 
 [comment]: # (
-SPDX-FileCopyrightText: 2020 Carles Fernandez-Prades <carles.fernandez@cttc.es>
+SPDX-FileCopyrightText: 2020-2021 Carles Fernandez-Prades <carles.fernandez@cttc.es>
 )
 <!-- prettier-ignore-end -->
 
@@ -108,3 +108,9 @@ following command:
      $ docker build -t carlesfernandez/docker-pybombs-gnsssdr .
 
 You can change `carlesfernandez/docker-pybombs-gnsssdr` at your own preference.
+
+## Copyright and License
+
+Copyright: &copy; 2017-2021 Carles Fern&aacute;ndez-Prades. All rights reserved.
+
+The content of this repository is released under the [MIT](./LICENSE) license.

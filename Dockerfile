@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2020, Carles Fernandez-Prades <carles.fernandez@cttc.es>
+# SPDX-FileCopyrightText: 2017-2021, Carles Fernandez-Prades <carles.fernandez@cttc.es>
 # SPDX-License-Identifier: MIT
 #
 # Install GNSS-SDR and its dependencies using PyBOMBS
@@ -29,7 +29,7 @@ RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommen
  protobuf-compiler=3.0.0-9.1ubuntu1 \
  nano=2.9.3-2 \
  pkg-config=0.29.1-0ubuntu2 \
- python3-apt=1.6.5ubuntu0.4 \
+ python3-apt=1.6.5ubuntu0.5 \
  python3-click=6.7-3 \
  python3-click-plugins=1.0.2-1ubuntu3 \
  python3-dev=3.6.7-1~18.04 \
