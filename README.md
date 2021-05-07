@@ -27,15 +27,15 @@ containers. It is Ubuntu, plus:
 - Administration tools that are especially useful in the context of Docker.
 - Mechanisms for easily running multiple processes, without violating the Docker
   philosophy.
-- It only consumes 9 MB of RAM.
+- It only consumes about 10 MB of RAM.
 
 If you still have not done so,
 [install Docker](https://docs.docker.com/get-started/#set-up-your-docker-environment)
-and verify your installation.
+and verify your installation before proceeding to use or build the Docker image.
 
 ## Pull docker image
 
-You can download (pull) the image via following command:
+You can download (pull) the image from the Docker Hub via following command:
 
      $ docker pull carlesfernandez/docker-pybombs-gnsssdr
 
@@ -58,7 +58,16 @@ folder inside the container, with read and write permissions.
 
 ### Run with graphical environment:
 
-- **On GNU/Linux host machines with X11 server installed**
+- **On GNU/Linux host machines**
+
+  Install the X11 server utilities in the host machine:
+    - Debian: `apt-get install x11-xserver-utils`
+    - Ubuntu: `apt-get install x11-xserver-utils`
+    - Arch Linux: `pacman -S xorg-xhost`
+    - Kali Linux: `apt-get install x11-xserver-utils`
+    - CentOS: `yum install xorg-xhost`
+    - Fedora: `dnf install xorg-xhost`
+    - Raspbian: `apt-get install x11-xserver-utils`
 
   In the host machine, adjust the permission of the X server host by the
   following command:
@@ -84,7 +93,8 @@ folder inside the container, with read and write permissions.
     in XQuartz settings.
   - Quit and restart XQuartz to activate the setting.
 
-  In the host machine:
+  Each time you want to use the graphical environment, type in the host machine
+  (with XQuartz already running):
 
       $ xhost + 127.0.0.1
 
@@ -102,7 +112,7 @@ folder inside the container, with read and write permissions.
 ## Build docker image
 
 This step is not needed if you have pulled the docker image. If you want to
-build the Docker image on you own, go to the repository root folder and run the
+build the Docker image on your own, go to the repository root folder and run the
 following command:
 
      $ docker build -t carlesfernandez/docker-pybombs-gnsssdr .
@@ -114,3 +124,10 @@ You can change `carlesfernandez/docker-pybombs-gnsssdr` at your own preference.
 Copyright: &copy; 2017-2021 Carles Fern&aacute;ndez-Prades. All rights reserved.
 
 The content of this repository is released under the [MIT](./LICENSE) license.
+
+## Acknowledgements
+
+This work was partially supported by the Spanish Ministry of Science,
+Innovation, and Universities through the Statistical Learning and Inference for
+Large Dimensional Communication Systems (ARISTIDES, RTI2018-099722-B-I00)
+project.
