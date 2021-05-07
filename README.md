@@ -37,13 +37,13 @@ and verify your installation before proceeding to use or build the Docker image.
 
 You can download (pull) the image from the Docker Hub via following command:
 
-     $ docker pull carlesfernandez/docker-pybombs-gnsssdr
+     $ docker pull carlesfernandez/docker-pybombs-gnsssdr:v1.0-rel2021.05.07
 
 ## Run docker image
 
 Run:
 
-    $ docker run -it carlesfernandez/docker-pybombs-gnsssdr
+    $ docker run -it carlesfernandez/docker-pybombs-gnsssdr:v1.0-rel2021.05.07
 
 ### Run with access to a folder in the host machine
 
