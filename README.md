@@ -27,7 +27,7 @@ containers. It is Ubuntu, plus:
 - Administration tools that are especially useful in the context of Docker.
 - Mechanisms for easily running multiple processes, without violating the Docker
   philosophy.
-- It only consumes about 10 MB of RAM.
+- Reduced footprint on RAM.
 
 If you still have not done so,
 [install Docker](https://docs.docker.com/get-started/#set-up-your-docker-environment)
@@ -61,13 +61,14 @@ folder inside the container, with read and write permissions.
 - **On GNU/Linux host machines**
 
   Install the X11 server utilities in the host machine:
-    - Debian: `apt-get install x11-xserver-utils`
-    - Ubuntu: `apt-get install x11-xserver-utils`
-    - Arch Linux: `pacman -S xorg-xhost`
-    - Kali Linux: `apt-get install x11-xserver-utils`
-    - CentOS: `yum install xorg-xhost`
-    - Fedora: `dnf install xorg-xhost`
-    - Raspbian: `apt-get install x11-xserver-utils`
+
+  - Debian: `apt-get install x11-xserver-utils`
+  - Ubuntu: `apt-get install x11-xserver-utils`
+  - Arch Linux: `pacman -S xorg-xhost`
+  - Kali Linux: `apt-get install x11-xserver-utils`
+  - CentOS: `yum install xorg-xhost`
+  - Fedora: `dnf install xorg-xhost`
+  - Raspbian: `apt-get install x11-xserver-utils`
 
   In the host machine, adjust the permission of the X server host by the
   following command:
@@ -117,7 +118,8 @@ following command:
 
      $ docker build -t carlesfernandez/docker-pybombs-gnsssdr .
 
-You can change `carlesfernandez/docker-pybombs-gnsssdr` at your own preference.
+You can change the tag name `carlesfernandez/docker-pybombs-gnsssdr` at your own
+preference.
 
 ## Copyright and License
 
