@@ -37,13 +37,13 @@ and verify your installation before proceeding to use or build the Docker image.
 
 You can download (pull) the image from the Docker Hub via following command:
 
-     $ docker pull carlesfernandez/docker-pybombs-gnsssdr:v1.0-rel2021.05.07
+     $ docker pull carlesfernandez/docker-pybombs-gnsssdr:rel1.0-latest
 
 ## Run docker image
 
 Run:
 
-    $ docker run -it carlesfernandez/docker-pybombs-gnsssdr:v1.0-rel2021.05.07
+    $ docker run -it carlesfernandez/docker-pybombs-gnsssdr:rel1.0-latest
 
 ### Run with access to a folder in the host machine
 
@@ -113,9 +113,10 @@ folder inside the container, with read and write permissions.
 ## Build docker image
 
 This step is not needed if you have pulled the docker image. If you want to
-build an updated Docker image on your own, go to the repository root folder and
-run the following command:
+build a Docker image based on Ubuntu 18.04 on your own, go to the repository
+root folder and run the following command:
 
+     $ git checkout v1.0
      $ docker build -t carlesfernandez/docker-pybombs-gnsssdr .
 
 You can change the tag name `carlesfernandez/docker-pybombs-gnsssdr` at your own
