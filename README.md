@@ -70,8 +70,8 @@ folder inside the container, with read and write permissions.
   - Fedora: `dnf install xorg-xhost`
   - Raspbian: `apt-get install x11-xserver-utils`
 
-  In the host machine, adjust the permission of the X server host by the
-  following command:
+  Each time you want to use the graphical environment, adjust the permission of
+  the X server in the host by the following command:
 
       $ xhost +local:root
 
@@ -113,8 +113,8 @@ folder inside the container, with read and write permissions.
 ## Build docker image
 
 This step is not needed if you have pulled the docker image. If you want to
-build the Docker image on your own, go to the repository root folder and run the
-following command:
+build an updated Docker image on your own, go to the repository root folder and
+run the following command:
 
      $ docker build -t carlesfernandez/docker-pybombs-gnsssdr .
 
@@ -123,7 +123,8 @@ preference.
 
 ## Copyright and License
 
-Copyright: &copy; 2017-2021 Carles Fern&aacute;ndez-Prades. All rights reserved.
+Copyright: &copy; 2017-2021 Carles Fern&aacute;ndez-Prades,
+[CTTC](http://www.cttc.es/). All rights reserved.
 
 The content of this repository is released under the [MIT](./LICENSE) license.
 
