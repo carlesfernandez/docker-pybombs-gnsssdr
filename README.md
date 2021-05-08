@@ -8,7 +8,7 @@ SPDX-FileCopyrightText: 2020-2021 Carles Fernandez-Prades <carles.fernandez@cttc
 )
 <!-- prettier-ignore-end -->
 
-# GNSS-SDR Dockerfile
+# docker-pybombs-gnsssdr
 
 This repository contains a Dockerfile that creates a
 [Docker](https://www.docker.com/) image with [GNSS-SDR](https://gnss-sdr.org)
@@ -16,7 +16,7 @@ and its dependencies installed via
 [PyBOMBS](https://github.com/gnuradio/pybombs). This includes
 [GNU Radio](https://gnuradio.org/) and drivers for a wide range of RF front-ends
 through [UHD](https://github.com/EttusResearch/uhd),
-[gr-osmosdr](http://osmocom.org/projects/sdr/wiki/GrOsmoSDR) and
+[gr-osmosdr](https://osmocom.org/projects/gr-osmosdr/wiki/GrOsmoSDR) and
 [gr-iio](https://github.com/analogdevicesinc/gr-iio).
 
 This image uses [baseimage-docker](https://github.com/phusion/baseimage-docker),
