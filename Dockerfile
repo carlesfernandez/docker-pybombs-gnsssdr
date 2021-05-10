@@ -39,6 +39,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   libhidapi-dev=0.9.0+dfsg-1 \
   liblog4cpp5-dev=1.1.3-1ubuntu1 \
   libmatio-dev=1.5.17-3 \
+  libpcap-dev=1.9.1-3 \
   libprotobuf-dev=3.6.1.3-2ubuntu5 \
   libpugixml-dev=1.10-1 \
   libqt5opengl5-dev=5.12.8+dfsg-0ubuntu1 \
@@ -48,6 +49,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   libtool=2.4.6-14 \
   libudev-dev=245.4-4ubuntu3.6 \
   libusb-1.0-0-dev=2:1.0.23-2build1 \
+  libxml2-dev=2.9.10+dfsg-5 \
   libzmq3-dev=4.3.2-2ubuntu1 \
   nano=4.8-1ubuntu1 \
   pkg-config=0.29.1-0ubuntu4 \
@@ -92,27 +94,27 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENAB
  && sed -i '/alsa/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_CHANNELS=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ZEROMQ=OFF -DENABLE_GR_CTRLPORT=ON -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
- && sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
- && echo "gitbranch: upgrade-3.8\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
- && sed -i '/gr-fcdproplus/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
- && sed -i '/gr-iqbal/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
- && sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
- && echo "gitbranch: gr3.8\n" >> /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr
+ && sed -i 's/doxygen/doxygen\n- libiio\n- libad9361/' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+ && echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_CHANNELS=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ZEROMQ=OFF -DENABLE_GR_CTRLPORT=ON -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON -DENABLE_GR_IIO=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+ && sed -i '/gr-fcdproplus/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr
 
 ARG TZ=CET
 RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
 
 # Build and install GNU Radio via Pybombs
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-default && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-master && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
 # Setup environment
 RUN echo "export PYTHONPATH=\"\$PYTHONPATH:/pybombs/lib/python3/dist-packages\"" >> ${PyBOMBS_init}/setup_env.sh && echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc && . ${PyBOMBS_init}/setup_env.sh
 ENV PYTHONPATH /usr/lib/python3/dist-packages
 
 # Install optional drivers via Pybombs
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install -y libhidapi-dev libtool && pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr gr-iio libpcap libad9361 libiio && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
+RUN sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
+ && echo "gitbranch: gr3.9\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
+ && sed -i '/source/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
+ && echo "source: git+https://github.com/dl1ksv/gr-iio.git" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr gr-iio && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
 # Build and install gnss-sdr drivers via Pybombs
 ENV APPDATA /root
