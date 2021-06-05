@@ -108,13 +108,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && pybombs prefix init ${PyBOM
 RUN echo "export PYTHONPATH=\"\$PYTHONPATH:/pybombs/lib/python3/dist-packages\"" >> ${PyBOMBS_init}/setup_env.sh && echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc && . ${PyBOMBS_init}/setup_env.sh
 ENV PYTHONPATH /usr/lib/python3/dist-packages
 
-# Install optional drivers via Pybombs
-RUN sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
- && echo "gitbranch: gr3.9\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
- && sed -i '/source/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
- && echo "source: git+https://github.com/dl1ksv/gr-iio.git" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr gr-iio && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
 # Build and install gnss-sdr drivers via Pybombs
 ENV APPDATA /root
