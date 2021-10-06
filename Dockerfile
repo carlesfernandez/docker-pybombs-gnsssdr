@@ -21,6 +21,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   automake=1:1.16.1-4ubuntu6 \
   bison=2:3.5.1+dfsg-1 \
   build-essential=12.8ubuntu1.1 \
+  ca-certificates=20210119~20.04.2 \
   cmake=3.16.3-1ubuntu1 \
   doxygen=1.8.17-0ubuntu2 \
   flex=2.6.4-6.2 \
