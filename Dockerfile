@@ -32,6 +32,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   libarmadillo-dev=1:9.800.4+dfsg-1build1 \
   libboost-all-dev=1.71.0.0ubuntu2 \
   libfftw3-dev=3.3.8-2ubuntu1 \
+  libfmt-dev=6.1.2+ds-2 \
   libgflags-dev=2.2.2-1build1 \
   libgmp-dev=2:6.2.0+dfsg-4 \
   libgnutls28-dev=3.6.13-2ubuntu1.6 \
