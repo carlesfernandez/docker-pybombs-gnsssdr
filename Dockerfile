@@ -39,7 +39,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   libgoogle-glog-dev=0.4.0-1build1 \
   libgtest-dev=1.10.0-2 \
   libhidapi-dev=0.9.0+dfsg-1 \
-  liblog4cpp5-dev=1.1.3-1ubuntu1 \
   libmatio-dev=1.5.17-3 \
   libpcap-dev=1.9.1-3 \
   libprotobuf-dev=3.6.1.3-2ubuntu5 \
