@@ -8,7 +8,7 @@
 # to `latest`! See
 # https://github.com/phusion/baseimage-docker/releases
 # for a list of version numbers.
-FROM phusion/baseimage:focal-1.0.0
+FROM phusion/baseimage:focal-1.2.0
 LABEL version="2.0" description="GNSS-SDR image built with PyBOMBS" maintainer="carles.fernandez@cttc.es"
 
 # Set prefix variables
@@ -17,7 +17,7 @@ ENV PyBOMBS_init /pybombs
 
 # Update apt-get and install some dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-missing -y --no-install-recommends \
-  apt-utils=2.0.5 \
+  apt-utils=2.0.6 \
   automake=1:1.16.1-4ubuntu6 \
   bison=2:3.5.1+dfsg-1 \
   build-essential=12.8ubuntu1.1 \
@@ -51,13 +51,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   libtool=2.4.6-14 \
   libudev-dev=245.4-4ubuntu3.16 \
   libusb-1.0-0-dev=2:1.0.23-2build1 \
-  libxml2-dev=2.9.10+dfsg-5 \
+  libxml2-dev=2.9.10+dfsg-5ubuntu0.20.04.2 \
   libzmq3-dev=4.3.2-2ubuntu1 \
   nano=4.8-1ubuntu1 \
   pkg-config=0.29.1-0ubuntu4 \
   protobuf-compiler=3.6.1.3-2ubuntu5 \
   pybind11-dev=2.4.3-2build2 \
-  python3-apt=2.0.0ubuntu0.20.04.4 \
+  python3-apt=2.0.0ubuntu0.20.04.7 \
   python3-click-plugins=1.1.1-2 \
   python3-click=7.0-3 \
   python3-dev=3.8.2-0ubuntu2 \
@@ -98,8 +98,6 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENAB
  && sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && sed -i 's/doxygen/doxygen\n- libiio\n- libad9361/' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
  && echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_CHANNELS=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ZEROMQ=OFF -DENABLE_GR_CTRLPORT=ON -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON -DENABLE_GR_IIO=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i 's/gitbranch: master/gitbranch: main/' /root/.pybombs/recipes/gr-recipes/gnuradio-master.lwr \
- && cat /root/.pybombs/recipes/gr-recipes/gnuradio-master.lwr \
  && sed -i '/gr-fcdproplus/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
  && sed -i '/gr-iqbal/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr
 
@@ -107,7 +105,7 @@ ARG TZ=CET
 RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
 
 # Build and install GNU Radio via Pybombs
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-master && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-main && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
 # Setup environment
 RUN echo "export PYTHONPATH=\"\$PYTHONPATH:/pybombs/lib/python3/dist-packages\"" >> ${PyBOMBS_init}/setup_env.sh && echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc && . ${PyBOMBS_init}/setup_env.sh
