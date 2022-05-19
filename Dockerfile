@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2017-2021, Carles Fernandez-Prades <carles.fernandez@cttc.es>
+# SPDX-FileCopyrightText: 2017-2022, Carles Fernandez-Prades <carles.fernandez@cttc.es>
 # SPDX-License-Identifier: MIT
 #
 # Install GNSS-SDR and its dependencies using PyBOMBS
@@ -8,8 +8,8 @@
 # to `latest`! See
 # https://github.com/phusion/baseimage-docker/releases
 # for a list of version numbers.
-FROM phusion/baseimage:focal-1.2.0
-LABEL version="2.0" description="GNSS-SDR image built with PyBOMBS" maintainer="carles.fernandez@cttc.es"
+FROM phusion/baseimage:jammy-1.0.0
+LABEL version="3.0" description="GNSS-SDR image built with PyBOMBS" maintainer="carles.fernandez@cttc.es"
 
 # Set prefix variables
 ENV PyBOMBS_prefix myprefix
@@ -17,66 +17,68 @@ ENV PyBOMBS_init /pybombs
 
 # Update apt-get and install some dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-missing -y --no-install-recommends \
-  apt-utils=2.0.6 \
-  automake=1:1.16.1-4ubuntu6 \
-  bison=2:3.5.1+dfsg-1 \
-  build-essential=12.8ubuntu1.1 \
-  ca-certificates=20210119~20.04.2 \
-  cmake=3.16.3-1ubuntu1 \
-  doxygen=1.8.17-0ubuntu2 \
-  flex=2.6.4-6.2 \
-  gir1.2-gtk-3.0=3.24.20-0ubuntu1.1 \
-  gir1.2-pango-1.0=1.44.7-2ubuntu4 \
-  git=1:2.25.1-1ubuntu3.4 \
-  gobject-introspection=1.64.1-1~ubuntu20.04.1 \
-  libarmadillo-dev=1:9.800.4+dfsg-1build1 \
-  libboost-all-dev=1.71.0.0ubuntu2 \
-  libfftw3-dev=3.3.8-2ubuntu1 \
-  libfmt-dev=6.1.2+ds-2 \
-  libgflags-dev=2.2.2-1build1 \
-  libgmp-dev=2:6.2.0+dfsg-4 \
-  libgnutls28-dev=3.6.13-2ubuntu1.6 \
-  libgoogle-glog-dev=0.4.0-1build1 \
-  libgtest-dev=1.10.0-2 \
-  libhidapi-dev=0.9.0+dfsg-1 \
-  libmatio-dev=1.5.17-3 \
-  libpcap-dev=1.9.1-3 \
-  libprotobuf-dev=3.6.1.3-2ubuntu5 \
-  libpugixml-dev=1.10-1 \
-  libqt5opengl5-dev=5.12.8+dfsg-0ubuntu2.1 \
-  libqt5svg5-dev=5.12.8-0ubuntu1 \
-  libqwt-qt5-dev=6.1.4-1.1build1 \
-  libsndfile1-dev=1.0.28-7ubuntu0.1 \
-  libspdlog-dev=1:1.5.0-1 \
-  libtool=2.4.6-14 \
-  libudev-dev=245.4-4ubuntu3.17 \
-  libusb-1.0-0-dev=2:1.0.23-2build1 \
-  libxml2-dev=2.9.10+dfsg-5ubuntu0.20.04.2 \
-  libzmq3-dev=4.3.2-2ubuntu1 \
-  nano=4.8-1ubuntu1 \
-  pkg-config=0.29.1-0ubuntu4 \
-  protobuf-compiler=3.6.1.3-2ubuntu5 \
-  pybind11-dev=2.4.3-2build2 \
-  python3-apt=2.0.0ubuntu0.20.04.7 \
-  python3-click-plugins=1.1.1-2 \
-  python3-click=7.0-3 \
-  python3-dev=3.8.2-0ubuntu2 \
-  python3-gi-cairo=3.36.0-1 \
-  python3-gi=3.36.0-1 \
-  python3-lxml=4.5.0-1ubuntu0.5 \
-  python3-mako=1.1.0+ds1-1ubuntu2 \
-  python3-matplotlib=3.1.2-1ubuntu4 \
-  python3-numpy=1:1.17.4-5ubuntu3 \
-  python3-pip=20.0.2-5ubuntu1.6 \
-  python3-pyqt5=5.14.1+dfsg-3build1 \
-  python3-pyqtgraph=0.11.0~rc0-1 \
-  python3-requests=2.22.0-2ubuntu1 \
-  python3-setuptools=45.2.0-1 \
-  python3-yaml=5.3.1-1 \
-  python3-zmq=18.1.1-3 \
-  qt5-default=5.12.8+dfsg-0ubuntu2.1 \
-  swig=4.0.1-5build1 \
-  wget=1.20.3-1ubuntu1 \
+  apt-utils=2.4.5 \
+  automake=1:1.16.5-1.3 \
+  bison=2:3.8.2+dfsg-1build1 \
+  build-essential=12.9ubuntu3 \
+  ca-certificates=20211016 \
+  cmake=3.22.1-1ubuntu1 \
+  doxygen=1.9.1-2ubuntu2 \
+  flex=2.6.4-8build2 \
+  gir1.2-gtk-3.0=3.24.33-1ubuntu1 \
+  gir1.2-pango-1.0=1.50.6+ds-2 \
+  git=1:2.34.1-1ubuntu1.2 \
+  gobject-introspection=1.72.0-1 \
+  libarmadillo-dev=1:10.8.2+dfsg-1 \
+  libboost-all-dev=1.74.0.3ubuntu7 \
+  libfftw3-dev=3.3.8-2ubuntu8 \
+  libfmt-dev=8.1.1+ds1-2 \
+  libgflags-dev=2.2.2-2 \
+  libgmp-dev=2:6.2.1+dfsg-3ubuntu1 \
+  libgnutls28-dev=3.7.3-4ubuntu1 \
+  libgoogle-glog-dev=0.5.0+really0.4.0-2 \
+  libgtest-dev=1.11.0-3 \
+  libhidapi-dev=0.11.2-1 \
+  libmatio-dev=1.5.21-1 \
+  libpcap-dev=1.10.1-4build1 \
+  libprotobuf-dev=3.12.4-1ubuntu7 \
+  libpugixml-dev=1.12.1-1 \
+  libqt5opengl5-dev=5.15.3+dfsg-2 \
+  libqt5svg5-dev=5.15.3-1 \
+  libqwt-qt5-dev=6.1.4-2 \
+  libsndfile1-dev=1.0.31-2build1 \
+  libspdlog-dev=1:1.9.2+ds-0.2 \
+  libtool=2.4.6-15build2 \
+  libudev-dev=249.11-0ubuntu3.1 \
+  libusb-1.0-0-dev=2:1.0.25-1ubuntu1 \
+  libxml2-dev=2.9.13+dfsg-1ubuntu0.1 \
+  libzmq3-dev=4.3.4-2 \
+  nano=6.2-1 \
+  pkg-config=0.29.2-1ubuntu3 \
+  protobuf-compiler=3.12.4-1ubuntu7 \
+  pybind11-dev=2.9.1-2 \
+  python3-apt=2.3.0ubuntu2 \
+  python3-click-plugins=1.1.1-3 \
+  python3-click=8.0.3-1 \
+  python3-dev=3.10.4-0ubuntu2 \
+  python3-gi-cairo=3.42.0-3build1 \
+  python3-gi=3.42.0-3build1 \
+  python3-lxml=4.8.0-1build1 \
+  python3-mako=1.1.3+ds1-2 \
+  python3-matplotlib=3.5.1-2build1 \
+  python3-numpy=1:1.21.5-1build2 \
+  python3-pip=22.0.2+dfsg-1 \
+  python3-pyqt5=5.15.6+dfsg-1ubuntu3 \
+  python3-pyqtgraph=0.12.4-1 \
+  python3-requests=2.25.1+dfsg-2 \
+  python3-setuptools=59.6.0-1.2 \
+  python3-yaml=5.4.1-1ubuntu1 \
+  python3-zmq=22.3.0-1build1 \
+  qt5-qmake=5.15.3+dfsg-2 \
+  qtbase5-dev=5.15.3+dfsg-2 \
+  qtbase5-dev-tools=5.15.3+dfsg-2 \
+  swig=4.0.2-1ubuntu1 \
+  wget=1.21.2-2ubuntu1 \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PyBOMBS
