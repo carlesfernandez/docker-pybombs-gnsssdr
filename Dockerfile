@@ -8,7 +8,7 @@
 # to `latest`! See
 # https://github.com/phusion/baseimage-docker/releases
 # for a list of version numbers.
-FROM phusion/baseimage:jammy-1.0.0
+FROM phusion/baseimage:jammy-1.0.1
 LABEL version="3.0" description="GNSS-SDR image built with PyBOMBS" maintainer="carles.fernandez@cttc.es"
 
 # Set prefix variables
@@ -17,7 +17,7 @@ ENV PyBOMBS_init /pybombs
 
 # Update apt-get and install some dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-missing -y --no-install-recommends \
-  apt-utils=2.4.5 \
+  apt-utils=2.4.7 \
   automake=1:1.16.5-1.3 \
   bison=2:3.8.2+dfsg-1build1 \
   build-essential=12.9ubuntu3 \
@@ -57,12 +57,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   pkg-config=0.29.2-1ubuntu3 \
   protobuf-compiler=3.12.4-1ubuntu7 \
   pybind11-dev=2.9.1-2 \
-  python3-apt=2.3.0ubuntu2 \
+  python3-apt=2.3.0ubuntu2.1 \
   python3-click-plugins=1.1.1-3 \
   python3-click=8.0.3-1 \
   python3-dev=3.10.4-0ubuntu2 \
-  python3-gi-cairo=3.42.0-3build1 \
-  python3-gi=3.42.0-3build1 \
+  python3-gi-cairo=3.42.1-0ubuntu1 \
+  python3-gi=3.42.1-0ubuntu1 \
   python3-lxml=4.8.0-1build1 \
   python3-mako=1.1.3+ds1-2 \
   python3-matplotlib=3.5.1-2build1 \
