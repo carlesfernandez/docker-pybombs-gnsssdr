@@ -27,7 +27,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   flex=2.6.4-8build2 \
   gir1.2-gtk-3.0=3.24.33-1ubuntu1 \
   gir1.2-pango-1.0=1.50.6+ds-2 \
-  git=1:2.34.1-1ubuntu1.4 \
+  git=1:2.34.1-1ubuntu1.5 \
   gobject-introspection=1.72.0-1 \
   libarmadillo-dev=1:10.8.2+dfsg-1 \
   libboost-all-dev=1.74.0.3ubuntu7 \
@@ -93,15 +93,15 @@ RUN pybombs recipes add-defaults
 
 # Customize configuration of some recipes
 RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENABLE_PLUTOSDR=ON -DENABLE_AD9361=ON -DENABLE_RAW_UDP=ON -DENABLE_ZMQ=ON -DENABLE_PACKAGING=ON -DENABLE_UNIT_TESTING=OFF\"\n" >> /root/.pybombs/recipes/gr-recipes/gnss-sdr.lwr \
- && echo "vars:\n  config_opt: \" -DINSTALL_LIB_DIR=\$prefix/lib\"\n" >> /root/.pybombs/recipes/gr-recipes/uhd.lwr \
- && sed -i '/gsl/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i '/alsa/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i 's/doxygen/doxygen\n- libiio\n- libad9361/' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_CHANNELS=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ZEROMQ=ON -DENABLE_GR_CTRLPORT=ON -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON -DENABLE_GR_IIO=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
- && sed -i '/gr-fcdproplus/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
- && sed -i '/gr-iqbal/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr
+  && echo "vars:\n  config_opt: \" -DINSTALL_LIB_DIR=\$prefix/lib\"\n" >> /root/.pybombs/recipes/gr-recipes/uhd.lwr \
+  && sed -i '/gsl/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+  && sed -i '/alsa/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+  && sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+  && sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+  && sed -i 's/doxygen/doxygen\n- libiio\n- libad9361/' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+  && echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=OFF -DENABLE_GR_CHANNELS=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ZEROMQ=ON -DENABLE_GR_CTRLPORT=ON -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON -DENABLE_GR_IIO=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+  && sed -i '/gr-fcdproplus/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
+  && sed -i '/gr-iqbal/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr
 
 ARG TZ=CET
 RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
