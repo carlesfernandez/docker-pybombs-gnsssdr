@@ -41,7 +41,7 @@ RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommen
   python3-pyqt5=5.10.1+dfsg-1ubuntu2 \
   python3-requests=2.18.4-2 \
   python3-ruamel.yaml=0.15.34-1 \
-  python3-setuptools=39.0.1-2 \
+  python3-setuptools=39.0.1-2ubuntu0.1 \
   python3-yaml=3.12-1build2 \
   swig=3.0.12-1 \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
