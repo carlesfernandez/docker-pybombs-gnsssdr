@@ -20,13 +20,13 @@ RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommen
   automake=1:1.15.1-3ubuntu2 \
   gir1.2-gtk-3.0=3.22.30-1ubuntu1 \
   gir1.2-pango-1.0=1.40.14-1 \
-  git=1:2.17.1-1ubuntu0.16 \
+  git=1:2.17.1-1ubuntu0.17 \
   libarmadillo-dev=1:8.400.0+dfsg-2 \
   libgnutls28-dev=3.5.18-1ubuntu1.6 \
   libmatio-dev=1.5.11-1 \
   libpugixml-dev=1.8.1-7 \
-  libprotobuf-dev=3.0.0-9.1ubuntu1 \
-  protobuf-compiler=3.0.0-9.1ubuntu1 \
+  libprotobuf-dev=3.0.0-9.1ubuntu1.1 \
+  protobuf-compiler=3.0.0-9.1ubuntu1.1 \
   nano=2.9.3-2 \
   pkg-config=0.29.1-0ubuntu2 \
   python3-apt=1.6.5ubuntu0.5 \
@@ -37,7 +37,7 @@ RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommen
   python3-lxml=4.2.1-1 \
   python3-mako=1.0.7+ds1-1 \
   python3-numpy=1:1.13.3-2ubuntu1 \
-  python3-pip=9.0.1-2.3~ubuntu1.18.04.7 \
+  python3-pip=9.0.1-2.3~ubuntu1.18.04.8 \
   python3-pyqt5=5.10.1+dfsg-1ubuntu2 \
   python3-requests=2.18.4-2 \
   python3-ruamel.yaml=0.15.34-1 \
