@@ -20,7 +20,7 @@ RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommen
   automake=1:1.15.1-3ubuntu2 \
   gir1.2-gtk-3.0=3.22.30-1ubuntu1 \
   gir1.2-pango-1.0=1.40.14-1 \
-  git=1:2.17.1-1ubuntu0.17 \
+  git=1:2.17.1-1ubuntu0.18 \
   libarmadillo-dev=1:8.400.0+dfsg-2 \
   libgnutls28-dev=3.5.18-1ubuntu1.6 \
   libmatio-dev=1.5.11-1 \
