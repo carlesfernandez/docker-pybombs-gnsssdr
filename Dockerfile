@@ -16,7 +16,10 @@ ENV PyBOMBS_prefix myprefix
 ENV PyBOMBS_init /pybombs
 
 # Update apt-get and install some dependencies
-RUN apt-get -qq update && apt-get install --fix-missing -y --no-install-recommends \
+RUN apt-get -qq update && apt-get install wget && \
+  wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add - && \
+  apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' && \
+  apt-get -qq update && apt-get install --fix-missing -y --no-install-recommends \
   automake=1:1.15.1-3ubuntu2 \
   gir1.2-gtk-3.0=3.22.30-1ubuntu1 \
   gir1.2-pango-1.0=1.40.14-1 \
@@ -69,6 +72,8 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENAB
   && echo "vars:\n  config_opt: \"-DENABLE_GR_AUDIO=ON -DENABLE_GR_CHANNELS=OFF -DENABLE_GR_COMEDI=OFF -DENABLE_GR_DIGITAL=OFF -DENABLE_DOXYGEN=OFF -DENABLE_GR_DTV=OFF -DENABLE_GR_FEC=OFF -DENABLE_GR_TRELLIS=OFF -DENABLE_GR_VIDEO_SDL=OFF -DENABLE_GR_VOCODER=OFF -DENABLE_GR_WAVELET=OFF -DENABLE_GR_ZEROMQ=ON -DENABLE_GR_CTRLPORT=ON -DENABLE_GR_ANALOG=ON -DENABLE_GR_FFT=ON -DENABLE_GR_FILTER=ON -DENABLE_GRC=ON -DENABLE_IIO=ON\"\n" >> /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
   && sed -i '/gitrev/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
   && sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
+  && sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/soapysdr.lwr \
+  && sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/soapysdr.lwr \
   && echo "gitbranch: upgrade-3.8\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
   && sed -i '/osmocom/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
   && sed -i '/airspyhf/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
