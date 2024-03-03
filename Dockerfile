@@ -17,11 +17,11 @@ ENV PyBOMBS_init /pybombs
 
 # Update apt-get and install some dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-missing -y --no-install-recommends \
-  apt-utils=2.4.7 \
+  apt-utils=2.4.11 \
   automake=1:1.16.5-1.3 \
   bison=2:3.8.2+dfsg-1build1 \
   build-essential=12.9ubuntu3 \
-  ca-certificates=20211016 \
+  ca-certificates=20230311ubuntu0.22.04.1 \
   cmake=3.22.1-1ubuntu1.22.04.2 \
   doxygen=1.9.1-2ubuntu2 \
   flex=2.6.4-8build2 \
@@ -57,7 +57,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   pkg-config=0.29.2-1ubuntu3 \
   protobuf-compiler=3.12.4-1ubuntu7.22.04.1 \
   pybind11-dev=2.9.1-2 \
-  python3-apt=2.3.0ubuntu2.1 \
+  python3-apt=2.4.0ubuntu3 \
   python3-click-plugins=1.1.1-3 \
   python3-click=8.0.3-1 \
   python3-dev=3.10.6-1~22.04 \
@@ -71,7 +71,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   python3-pyqt5=5.15.6+dfsg-1ubuntu3 \
   python3-pyqtgraph=0.12.4-1 \
   python3-requests=2.25.1+dfsg-2 \
-  python3-setuptools=59.6.0-1.2 \
+  python3-setuptools=59.6.0-1.2ubuntu0.22.04.1 \
   python3-yaml=5.4.1-1ubuntu1 \
   python3-zmq=22.3.0-1build1 \
   qt5-qmake=5.15.3+dfsg-2ubuntu0.2 \
