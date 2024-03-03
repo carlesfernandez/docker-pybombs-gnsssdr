@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2017-2022, Carles Fernandez-Prades <carles.fernandez@cttc.es>
+# SPDX-FileCopyrightText: 2017-2024, Carles Fernandez-Prades <carles.fernandez@cttc.es>
 # SPDX-License-Identifier: MIT
 #
 # Install GNSS-SDR and its dependencies using PyBOMBS
@@ -8,8 +8,8 @@
 # to `latest`! See
 # https://github.com/phusion/baseimage-docker/releases
 # for a list of version numbers.
-FROM phusion/baseimage:jammy-1.0.1
-LABEL version="3.0" description="GNSS-SDR image built with PyBOMBS" maintainer="carles.fernandez@cttc.es"
+FROM phusion/baseimage:jammy-1.0.2
+LABEL version="4.0" description="GNSS-SDR image built with PyBOMBS" maintainer="carles.fernandez@cttc.es"
 
 # Set prefix variables
 ENV PyBOMBS_prefix myprefix
