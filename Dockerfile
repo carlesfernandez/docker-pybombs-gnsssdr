@@ -65,6 +65,7 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENAB
   && sed -i '/gsl/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
   && sed -i '/pycairo/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
   && sed -i '/qwt6/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
+  && sed -i '/soapysdr/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
   && sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
   && sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/gnuradio.lwr \
   && sed -i '/ssl/d' /root/.pybombs/recipes/gr-recipes/apache-thrift.lwr \
@@ -77,6 +78,7 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENAB
   && echo "gitbranch: upgrade-3.8\n" >> /root/.pybombs/recipes/gr-recipes/gr-iio.lwr \
   && sed -i '/osmocom/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
   && sed -i '/airspyhf/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
+  && sed -i '/soapysdr/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
   && echo "source: git+https://github.com/osmocom/gr-osmosdr.git\n" >> /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
   && sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
   && echo "gitbranch: gr3.8\n" >> /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
