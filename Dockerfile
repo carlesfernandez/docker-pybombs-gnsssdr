@@ -27,7 +27,7 @@ RUN apt-get -qq update && apt-get install wget && \
   libarmadillo-dev=1:8.400.0+dfsg-2 \
   libgnutls28-dev=3.5.18-1ubuntu1.6 \
   libmatio-dev=1.5.11-1 \
-  libncurses-dev=6.1-1ubuntu1.18.04.1 \
+  libncurses5-dev=6.1-1ubuntu1.18.04.1 \
   libpugixml-dev=1.8.1-7 \
   libprotobuf-dev=3.0.0-9.1ubuntu1.1 \
   protobuf-compiler=3.0.0-9.1ubuntu1.1 \
