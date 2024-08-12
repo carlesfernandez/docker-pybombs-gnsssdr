@@ -12,8 +12,8 @@ FROM phusion/baseimage:bionic-1.0.0
 LABEL version="1.0" description="GNSS-SDR image built with PyBOMBS" maintainer="carles.fernandez@cttc.es"
 
 # Set prefix variables
-ENV PyBOMBS_prefix myprefix
-ENV PyBOMBS_init /pybombs
+ENV PyBOMBS_prefix=myprefix
+ENV PyBOMBS_init=/pybombs
 
 # Update apt-get and install some dependencies
 RUN apt-get -qq update && apt-get install wget && \
@@ -84,7 +84,10 @@ RUN echo "vars:\n  config_opt: \"-DENABLE_OSMOSDR=ON -DENABLE_FMCOMMS2=ON -DENAB
   && sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
   && echo "gitbranch: gr3.8\n" >> /root/.pybombs/recipes/gr-recipes/gr-osmosdr.lwr \
   && sed -i '/gitbranch/d' /root/.pybombs/recipes/gr-recipes/libad9361.lwr \
-  && echo "gitbranch: 2022_R2" >> /root/.pybombs/recipes/gr-recipes/libad9361.lwr
+  && echo "gitbranch: 2022_R2" >> /root/.pybombs/recipes/gr-recipes/libad9361.lwr \
+  && sed -i '/vars/d' /root/.pybombs/recipes/gr-recipes/bladeRF.lwr  \
+  && sed -i '/config_opt/d' /root/.pybombs/recipes/gr-recipes/bladeRF.lwr \
+  && echo "vars:\n  config_opt: \" -DINSTALL_UDEV_RULES=OFF -DCURSES_INCLUDE_PATH=/usr/include\"\n" >> /root/.pybombs/recipes/gr-recipes/bladeRF.lwr
 
 # Build and install GNU Radio via Pybombs
 RUN apt-get -qq update && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio38 && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
@@ -97,7 +100,7 @@ RUN pip3 install cmake
 RUN apt-get -qq update && pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr gr-iio libpcap libad9361 libiio && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
 # Build and install gnss-sdr drivers via Pybombs
-ENV APPDATA /root
+ENV APPDATA=/root
 RUN apt-get -qq update && pybombs -p ${PyBOMBS_prefix} -v install gnss-sdr && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
 WORKDIR /home
