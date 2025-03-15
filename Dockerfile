@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2017-2024, Carles Fernandez-Prades <carles.fernandez@cttc.es>
+# SPDX-FileCopyrightText: 2017-2025, Carles Fernandez-Prades <carles.fernandez@cttc.es>
 # SPDX-License-Identifier: MIT
 #
 # Install GNSS-SDR and its dependencies using PyBOMBS
@@ -9,14 +9,14 @@
 # https://github.com/phusion/baseimage-docker/releases
 # for a list of version numbers.
 FROM phusion/baseimage:jammy-1.0.2
-LABEL version="4.0" description="GNSS-SDR image built with PyBOMBS" maintainer="carles.fernandez@cttc.es"
+LABEL version="5.0" description="GNSS-SDR image built with PyBOMBS" maintainer="carles.fernandez@cttc.es"
 
 # Set prefix variables
 ENV PyBOMBS_prefix=myprefix
 ENV PyBOMBS_init=/pybombs
 
-# Update apt-get and install some dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-missing -y --no-install-recommends \
+# Update apt and install some dependencies
+RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y --fix-missing --no-install-recommends \
   apt-utils=2.4.11 \
   automake=1:1.16.5-1.3 \
   bison=2:3.8.2+dfsg-1build1 \
@@ -80,7 +80,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install --fix-m
   qtbase5-dev-tools=5.15.3+dfsg-2ubuntu0.2 \
   swig=4.0.2-1ubuntu1 \
   wget=1.21.2-2ubuntu1 \
-  && apt-get clean && rm -rf /var/lib/apt/lists/*
+  && apt clean && rm -rf /var/lib/apt/lists/*
 
 # Install PyBOMBS
 RUN pip3 install --upgrade pip
@@ -108,17 +108,17 @@ ARG TZ=CET
 RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
 
 # Build and install GNU Radio via Pybombs
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-main && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
+RUN DEBIAN_FRONTEND=noninteractive apt update && pybombs prefix init ${PyBOMBS_init} -a ${PyBOMBS_prefix} -R gnuradio-main && apt clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
 # Setup environment
 RUN echo "export PYTHONPATH=\"\$PYTHONPATH:/pybombs/lib/python3/dist-packages\"" >> ${PyBOMBS_init}/setup_env.sh && echo "source "${PyBOMBS_init}"/setup_env.sh" > /root/.bashrc && . ${PyBOMBS_init}/setup_env.sh
 ENV PYTHONPATH=/usr/lib/python3/dist-packages
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
+RUN DEBIAN_FRONTEND=noninteractive apt update && pybombs -p ${PyBOMBS_prefix} -v install gr-osmosdr && apt clean && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
 # Build and install gnss-sdr drivers via Pybombs
 ENV APPDATA=/root
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && pybombs -p ${PyBOMBS_prefix} -v install gnss-sdr && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
+RUN DEBIAN_FRONTEND=noninteractive apt update && pybombs -p ${PyBOMBS_prefix} -v install gnss-sdr && rm -rf /var/lib/apt/lists/* && rm -rf ${PyBOMBS_init}/src/*
 
 WORKDIR /home
 CMD ["bash"]
